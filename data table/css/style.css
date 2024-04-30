@@ -37,3 +37,30 @@ i{
     color: rgb(26, 211, 118);
     
 }
+#Copy{
+    font-size:smaller;
+    font-style: italic;
+    background-color: #171817;
+    color: #fff;
+    width: 200px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    
+}
+#Copy1{
+    font-size:smaller;
+    font-style: italic;
+    background-color: #2a2c2b;
+    color: #fff;
+    width: 200px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+}
+#flex2{
+    display: flex;
+    justify-content: space-between;
+}
