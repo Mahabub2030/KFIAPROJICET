@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Table</title>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/vfs_fonts.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="container mx-auto">
+    <h1 class="text-2xl font-bold mb-4">Demo Table</h1>
+
+    <div class="mb-4 flex gap-2">
+      <button id="prevMonth" class="bg-yellow-500 text-white px-4 py-2 rounded">Previous Month</button>
+      <button id="nextMonth" class="bg-yellow-500 text-white px-4 py-2 rounded">Next Month</button>
+      <button id="downloadExcel" class="bg-green-500 text-white px-4 py-2 rounded">Download Excel</button>
+      <button id="downloadPDF" class="bg-red-500 text-white px-4 py-2 rounded">Download PDF</button>
+      <input id="searchInput" type="text" placeholder="Search" class="border px-4 py-2 rounded">
+      <button id="sortByName" class="bg-blue-500 text-white px-4 py-2 rounded">Sort by Name</button>
+    </div>
+
+    <table id="demoTable" class="table-auto w-full bg-white shadow rounded">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="px-4 py-2">S.N</th>
+          <th class="px-4 py-2">Name</th>
+          <th class="px-4 py-2">Job Code</th>
+          <th class="px-4 py-2">Job Description</th>
+          <th class="px-4 py-2">Month</th>
+          <th class="px-4 py-2">Year</th>
+          <th class="px-4 py-2">DACO</th>
+          <th class="px-4 py-2">ID</th>
+          <th class="px-4 py-2">Nationality</th>
+          <th class="px-4 py-2">Total Mhr</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be populated dynamically -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    let currentMonth = 12; // Default month
+    let currentYear = 2024; // Default year
+
+    const data = [
+      { sn: 1, name: "Abdulhakim Alammar", jobCode: "Nabatat-046", jobDescription: "Project Manager", month: 12, year: 2024, daco: "DMM-04-8942", id: "111825723", nationality: "Saudi", totalMhr: 240 },
+      { sn: 2, name: "Shoeib Abou Zeid Mahmoud Awad", jobCode: "Nabatat-039", jobDescription: "Operation Manager", month: 12, year: 2024, daco: "DMM-02-7825", id: "2254394725", nationality: "Egyptian", totalMhr: 240 },
+      { sn: 3, name: "Ahmed Khaled", jobCode: "Nabatat-025", jobDescription: "Technician", month: 11, year: 2024, daco: "DMM-01-5436", id: "543267890", nationality: "Jordanian", totalMhr: 200 },
+      // Add more demo data as needed
+    ];
+
+    const tableBody = document.querySelector("#demoTable tbody");
+
+    function populateTable(data) {
+      tableBody.innerHTML = "";
+      data.forEach(row => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="border px-4 py-2">${row.sn}</td>
+          <td class="border px-4 py-2">${row.name}</td>
+          <td class="border px-4 py-2">${row.jobCode}</td>
+          <td class="border px-4 py-2">${row.jobDescription}</td>
+          <td class="border px-4 py-2">${row.month}</td>
+          <td class="border px-4 py-2">${row.year}</td>
+          <td class="border px-4 py-2">${row.daco}</td>
+          <td class="border px-4 py-2">${row.id}</td>
+          <td class="border px-4 py-2">${row.nationality}</td>
+          <td class="border px-4 py-2">${row.totalMhr}</td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }
+
+    function filterByMonth() {
+      const filteredData = data.filter(row => row.month === currentMonth && row.year === currentYear);
+      populateTable(filteredData);
+    }
+
+    function downloadExcel() {
+      const filteredData = data.filter(row => row.month === currentMonth && row.year === currentYear);
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.json_to_sheet(filteredData);
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      XLSX.writeFile(wb, `table_data_${currentMonth}_${currentYear}.xlsx`);
+    }
+
+    function downloadPDF() {
+      const filteredData = data.filter(row => row.month === currentMonth && row.year === currentYear);
+      const docDefinition = {
+        content: [
+          {
+            table: {
+              body: [
+                ["S.N", "Name", "Job Code", "Job Description", "Month", "Year", "DACO", "ID", "Nationality", "Total Mhr"],
+                ...filteredData.map(row => [row.sn, row.name, row.jobCode, row.jobDescription, row.month, row.year, row.daco, row.id, row.nationality, row.totalMhr])
+              ]
+            }
+          }
+        ]
+      };
+      pdfMake.createPdf(docDefinition).download(`table_data_${currentMonth}_${currentYear}.pdf`);
+    }
+
+    function changeMonth(direction) {
+      if (direction === "prev") {
+        currentMonth--;
+        if (currentMonth < 1) {
+          currentMonth = 12;
+          currentYear--;
+        }
+      } else if (direction === "next") {
+        currentMonth++;
+        if (currentMonth > 12) {
+          currentMonth = 1;
+          currentYear++;
+        }
+      }
+      filterByMonth();
+    }
+
+    function searchTable() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const filteredData = data.filter(row =>
+        Object.values(row).some(val => String(val).toLowerCase().includes(query))
+      );
+      populateTable(filteredData);
+    }
+
+    function sortByName() {
+      const sortedData = [...data].sort((a, b) => a.name.localeCompare(b.name));
+      populateTable(sortedData);
+    }
+
+    document.getElementById("prevMonth").addEventListener("click", () => changeMonth("prev"));
+    document.getElementById("nextMonth").addEventListener("click", () => changeMonth("next"));
+    document.getElementById("downloadExcel").addEventListener("click", downloadExcel);
+    document.getElementById("downloadPDF").addEventListener("click", downloadPDF);
+    document.getElementById("searchInput").addEventListener("input", searchTable);
+    document.getElementById("sortByName").addEventListener("click", sortByName);
+
+    // Populate table on load
+    filterByMonth();
+  </script>
+</body>
+</html>
