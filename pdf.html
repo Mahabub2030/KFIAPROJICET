@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF Upload Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+</head>
+<body class="bg-gray-100 p-4">
+  <div class="container mx-auto">
+    <h2 class="text-2xl font-bold mb-4">PDF Upload Dashboard</h2>
+    <table id="pdfTable" class="display w-full mb-8">
+      <thead>
+        <tr>
+          <th>Package ID</th>
+          <th>Facility</th>
+          <th>Month</th>
+          <th>Year</th>
+          <th>Attachment</th>
+          <th>Entry Date</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+
+    <div class="bg-white shadow rounded p-6">
+      <h3 class="text-xl font-semibold mb-4">Upload Supporting KPI Documents</h3>
+      <form id="uploadForm" class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div>
+          <label class="block mb-1">Contractor</label>
+          <input type="text" class="w-full border rounded p-2" value="Nabtat" disabled />
+        </div>
+        <div>
+          <label class="block mb-1">Package ID</label>
+          <input type="text" id="packageID" class="w-full border rounded p-2" required />
+        </div>
+        <div>
+          <label class="block mb-1">Facility</label>
+          <input type="text" id="facility" class="w-full border rounded p-2" required />
+        </div>
+        <div>
+          <label class="block mb-1">Month</label>
+          <input type="text" id="month" class="w-full border rounded p-2" required />
+        </div>
+        <div>
+          <label class="block mb-1">Year</label>
+          <input type="number" id="year" class="w-full border rounded p-2" required />
+        </div>
+        <div>
+          <label class="block mb-1">Attachment</label>
+          <input type="file" id="attachment" accept="application/pdf" class="w-full border rounded p-2" required />
+        </div>
+        <div class="col-span-full">
+          <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      const table = $('#pdfTable').DataTable();
+
+      $('#uploadForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const packageID = $('#packageID').val();
+        const facility = $('#facility').val();
+        const month = $('#month').val();
+        const year = $('#year').val();
+        const file = $('#attachment')[0].files[0];
+
+        if (!file || file.type !== 'application/pdf') {
+          alert('Please upload a valid PDF file.');
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('attachment', file);
+
+        $.ajax({
+          url: 'http://localhost:3000/upload', // Update with your backend URL
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (response) {
+            const fileURL = response.filePath;
+            const entryDate = new Date().toLocaleString();
+
+            table.row.add([
+              packageID,
+              facility,
+              month,
+              year,
+              `<a href="${fileURL}" target="_blank" class="text-blue-600 underline">${response.fileName}</a>`,
+              entryDate,
+            ]).draw(false);
+
+            $('#uploadForm')[0].reset();
+          },
+          error: function () {
+            alert('File upload failed. Please try again.');
+          },
+        });
+      });
+    });
+  </script>
+</body>
+</html>

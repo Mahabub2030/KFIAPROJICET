@@ -1,150 +1,279 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Demo Table</title>
-  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/pdfmake.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/vfs_fonts.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Example</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 </head>
-<body class="bg-gray-100 p-6">
-  <div class="container mx-auto">
-    <h1 class="text-2xl font-bold mb-4">Demo Table</h1>
+<body class="bg-white text-gray-800">
+    <header class="relative h-24 sm:h-28 md:h-32 lg:h-36 w-full overflow-hidden">
+        <!-- Background Image -->
+        <img src="image.png" alt="DACO Header" class="absolute inset-0 w-full h-full object-cover opacity-90" />
 
-    <div class="mb-4 flex gap-2">
-      <button id="prevMonth" class="bg-yellow-500 text-white px-4 py-2 rounded">Previous Month</button>
-      <button id="nextMonth" class="bg-yellow-500 text-white px-4 py-2 rounded">Next Month</button>
-      <button id="downloadExcel" class="bg-green-500 text-white px-4 py-2 rounded">Download Excel</button>
-      <button id="downloadPDF" class="bg-red-500 text-white px-4 py-2 rounded">Download PDF</button>
-      <input id="searchInput" type="text" placeholder="Search" class="border px-4 py-2 rounded">
-      <button id="sortByName" class="bg-blue-500 text-white px-4 py-2 rounded">Sort by Name</button>
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+
+        <!-- Header Content -->
+        <div class="relative z-10 flex items-center justify-between h-full px-4 sm:px-8 text-white">
+            <!-- Logo -->
+            <div class="flex items-center gap-2">
+                <img src="./img/logo.jpg" alt="DACO Logo" class="h-10 sm:h-12" />
+                <div class="text-xs sm:text-sm leading-tight">
+                    <strong class="block text-lg sm:text-xl font-bold">Nabatat Co. Company</strong>
+                    <span class="block text-[10px]">Dammam Airports Company</span>
+                </div>
+            </div>
+
+            <!-- Title -->
+            <div class="text-center flex-1">
+                <h1 class="text-md sm:text-lg md:text-xl font-semibold">Landeside Servicer – Information Web</h1>
+                <p class="text-xs sm:text-sm">Contractor Inputs – Nabatat</p>
+            </div>
+
+            <!-- Empty right section to balance layout -->
+            <div class="w-12 sm:w-16"></div>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-4">
+        <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center">
+                <label for="entries" class="mr-2">Show</label>
+                <select id="entries" class="border border-gray-300 rounded p-1" onchange="changeEntries()">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <span class="ml-2">entries</span>
+            </div>
+            <div class="flex items-center">
+                <button class="text-gray-600 mr-4" onclick="exportToExcel()"><i class="fas fa-file-excel"></i> Excel</button>
+                <button class="text-gray-600 mr-4" onclick="exportToPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+                <div class="relative">
+                    <input type="text" id="searchInput" class="border border-gray-300 rounded p-1" placeholder="Search" onkeyup="searchTable()">
+                </div>
+            </div>
+        </div>
+
+        <!-- Form for adding employees -->
+        <div class="mb-4">
+            <form id="employeeForm" class="flex flex-wrap gap-4">
+                <input type="text" id="packageId" placeholder="Package ID" class="border border-gray-300 rounded p-2">
+                <input type="text" id="jobCode" placeholder="Job Code" class="border border-gray-300 rounded p-2">
+                <input type="text" id="nationality" placeholder="Nationality" class="border border-gray-300 rounded p-2">
+                <input type="text" id="jobName" placeholder="Job Name" class="border border-gray-300 rounded p-2">
+                <input type="number" id="required" placeholder="Required" class="border border-gray-300 rounded p-2">
+                <input type="number" id="manhourRate" placeholder="Manhour Rate" class="border border-gray-300 rounded p-2">
+                <input type="datetime-local" id="entryDate" placeholder="Entry Date" class="border border-gray-300 rounded p-2">
+                <button type="button" onclick="addEmployee()" class="bg-blue-500 text-white rounded p-2">Add Employee</button>
+            </form>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table id="dataTable" class="min-w-full bg-white border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+                        <th class="py-3 px-6 text-left">Package ID <i class="fas fa-sort"></i></th>
+                        <th class="py-3 px-6 text-left">Job Code <i class="fas fa-sort"></i></th>
+                        <th class="py-3 px-6 text-left">Nationality <i class="fas fa-sort"></i></th>
+                        <th class="py-3 px-6 text-left">Job Name <i class="fas fa-sort"></i></th>
+                        <th class="py-3 px-6 text-left">Required <i class="fas fa-sort"></i></th>
+                        <th class="py-3 px-6 text-left">Manhour Rate <i class="fas fa-sort"></i></th>
+                        <th class="py-3 px-6 text-left">Entry Date <i class="fas fa-sort"></i></th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="text-gray-600 text-sm font-light">
+                    <!-- Table rows will be dynamically generated -->
+                </tbody>
+            </table>
+        </div>
+        <div class="flex justify-between items-center mt-4">
+            <div id="entriesInfo" class="text-gray-600 text-sm">
+                Showing 1 to 10 of 85 entries
+            </div>
+            <div class="flex items-center">
+                <button class="border border-gray-300 rounded p-1 mx-1" onclick="prevPage()"><i class="fas fa-chevron-left"></i></button>
+                <div id="pagination" class="flex items-center">
+                    <!-- Pagination buttons will be dynamically generated -->
+                </div>
+                <button class="border border-gray-300 rounded p-1 mx-1" onclick="nextPage()"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
     </div>
 
-    <table id="demoTable" class="table-auto w-full bg-white shadow rounded">
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="px-4 py-2">S.N</th>
-          <th class="px-4 py-2">Name</th>
-          <th class="px-4 py-2">Job Code</th>
-          <th class="px-4 py-2">Job Description</th>
-          <th class="px-4 py-2">Month</th>
-          <th class="px-4 py-2">Year</th>
-          <th class="px-4 py-2">DACO</th>
-          <th class="px-4 py-2">ID</th>
-          <th class="px-4 py-2">Nationality</th>
-          <th class="px-4 py-2">Total Mhr</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Rows will be populated dynamically -->
-      </tbody>
-    </table>
-  </div>
+    <script>
+        const data = [
+            { packageId: 'PK200', jobCode: 'Nabikat-001', nationality: 'Nationality', jobName: 'Accountant', required: 2, manhourRate: 30.00, entryDate: 'Nov 11, 2024 01:51 PM' },
+            { packageId: 'PK200', jobCode: 'Nabikat-002', nationality: 'Nationality', jobName: 'Applicator', required: 4, manhourRate: 18.00, entryDate: 'Nov 11, 2024 01:51 PM' },
+            { packageId: 'PK200', jobCode: 'Nabikat-003', nationality: 'Nationality', jobName: 'Asphalt specialist', required: 1, manhourRate: 18.00, entryDate: 'Nov 11, 2024 01:51 PM' },
+            { packageId: 'PK200', jobCode: 'Nabikat-004', nationality: 'Nationality', jobName: 'Asphalt Technician', required: 1, manhourRate: 18.00, entryDate: 'Nov 11, 2024 01:51 PM' },
+            { packageId: 'PK200', jobCode: 'Nabikat-005', nationality: 'Nationality', jobName: 'Buyer', required: 1, manhourRate: 18.00, entryDate: 'Nov 11, 2024 01:51 PM' },
+            { packageId: 'PK200', jobCode: 'Nabikat-006', nationality: 'Nationality', jobName: 'Camp Boss', required: 1, manhourRate: 14.00, entryDate: 'Nov 11, 2024 01:51 PM' },
+            { packageId: 'PK200', jobCode: 'Nabikat-007', nationality: 'Nationality', jobName: 'Camp Janitor', required: 1, manhourRate: 16.00, entryDate: 'Nov 11, 2024 01:51 PM' },
+            { packageId: 'PK200', jobCode: 'Nabikat-008', nationality: 'Nationality', jobName: 'Chief Section Head', required: 2, manhourRate: 18.00, entryDate: 'Nov 11, 2024 01:51 PM' },
+            { packageId: 'PK200', jobCode: 'Nabikat-009', nationality: 'Nationality', jobName: 'Chief Section Head', required: 1, manhourRate: 50.00, entryDate: 'Nov 11, 2024 01:51 PM' },
+            { packageId: 'PK200', jobCode: 'Nabikat-010', nationality: 'Nationality', jobName: 'Cook', required: 2, manhourRate: 18.00, entryDate: 'Nov 11, 2024 01:51 PM' },
+            // Add more data as needed
+        ];
 
-  <script>
-    let currentMonth = 12; // Default month
-    let currentYear = 2024; // Default year
+        let currentPage = 1;
+        let entriesPerPage = 10;
+        let filteredData = data;
 
-    const data = [
-      { sn: 1, name: "Abdulhakim Alammar", jobCode: "Nabatat-046", jobDescription: "Project Manager", month: 12, year: 2024, daco: "DMM-04-8942", id: "111825723", nationality: "Saudi", totalMhr: 240 },
-      { sn: 2, name: "Shoeib Abou Zeid Mahmoud Awad", jobCode: "Nabatat-039", jobDescription: "Operation Manager", month: 12, year: 2024, daco: "DMM-02-7825", id: "2254394725", nationality: "Egyptian", totalMhr: 240 },
-      { sn: 3, name: "Ahmed Khaled", jobCode: "Nabatat-025", jobDescription: "Technician", month: 11, year: 2024, daco: "DMM-01-5436", id: "543267890", nationality: "Jordanian", totalMhr: 200 },
-      // Add more demo data as needed
-    ];
+        function renderTable() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
 
-    const tableBody = document.querySelector("#demoTable tbody");
+            const start = (currentPage - 1) * entriesPerPage;
+            const end = start + entriesPerPage;
+            const paginatedData = filteredData.slice(start, end);
 
-    function populateTable(data) {
-      tableBody.innerHTML = "";
-      data.forEach(row => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td class="border px-4 py-2">${row.sn}</td>
-          <td class="border px-4 py-2">${row.name}</td>
-          <td class="border px-4 py-2">${row.jobCode}</td>
-          <td class="border px-4 py-2">${row.jobDescription}</td>
-          <td class="border px-4 py-2">${row.month}</td>
-          <td class="border px-4 py-2">${row.year}</td>
-          <td class="border px-4 py-2">${row.daco}</td>
-          <td class="border px-4 py-2">${row.id}</td>
-          <td class="border px-4 py-2">${row.nationality}</td>
-          <td class="border px-4 py-2">${row.totalMhr}</td>
-        `;
-        tableBody.appendChild(tr);
-      });
-    }
+            paginatedData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.classList.add('border-b', 'border-gray-200', 'hover:bg-gray-100');
+                tr.innerHTML = `
+                    <td class="py-3 px-6 text-left">${row.packageId}</td>
+                    <td class="py-3 px-6 text-left">${row.jobCode}</td>
+                    <td class="py-3 px-6 text-left">${row.nationality}</td>
+                    <td class="py-3 px-6 text-left">${row.jobName}</td>
+                    <td class="py-3 px-6 text-left">${row.required}</td>
+                    <td class="py-3 px-6 text-left">${row.manhourRate}</td>
+                    <td class="py-3 px-6 text-left">${row.entryDate}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
 
-    function filterByMonth() {
-      const filteredData = data.filter(row => row.month === currentMonth && row.year === currentYear);
-      populateTable(filteredData);
-    }
+            renderPagination();
+            updateEntriesInfo();
+        }
 
-    function downloadExcel() {
-      const filteredData = data.filter(row => row.month === currentMonth && row.year === currentYear);
-      const wb = XLSX.utils.book_new();
-      const ws = XLSX.utils.json_to_sheet(filteredData);
-      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-      XLSX.writeFile(wb, `table_data_${currentMonth}_${currentYear}.xlsx`);
-    }
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
 
-    function downloadPDF() {
-      const filteredData = data.filter(row => row.month === currentMonth && row.year === currentYear);
-      const docDefinition = {
-        content: [
-          {
-            table: {
-              body: [
-                ["S.N", "Name", "Job Code", "Job Description", "Month", "Year", "DACO", "ID", "Nationality", "Total Mhr"],
-                ...filteredData.map(row => [row.sn, row.name, row.jobCode, row.jobDescription, row.month, row.year, row.daco, row.id, row.nationality, row.totalMhr])
-              ]
+            const totalPages = Math.ceil(filteredData.length / entriesPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.classList.add('border', 'border-gray-300', 'rounded', 'p-1', 'mx-1');
+                button.textContent = i;
+                button.onclick = () => goToPage(i);
+                if (i === currentPage) {
+                    button.classList.add('bg-gray-300');
+                }
+                pagination.appendChild(button);
             }
-          }
-        ]
-      };
-      pdfMake.createPdf(docDefinition).download(`table_data_${currentMonth}_${currentYear}.pdf`);
-    }
-
-    function changeMonth(direction) {
-      if (direction === "prev") {
-        currentMonth--;
-        if (currentMonth < 1) {
-          currentMonth = 12;
-          currentYear--;
         }
-      } else if (direction === "next") {
-        currentMonth++;
-        if (currentMonth > 12) {
-          currentMonth = 1;
-          currentYear++;
+
+        function updateEntriesInfo() {
+            const entriesInfo = document.getElementById('entriesInfo');
+            const start = (currentPage - 1) * entriesPerPage + 1;
+            const end = Math.min(start + entriesPerPage - 1, filteredData.length);
+            entriesInfo.textContent = `Showing ${start} to ${end} of ${filteredData.length} entries`;
         }
-      }
-      filterByMonth();
-    }
 
-    function searchTable() {
-      const query = document.getElementById("searchInput").value.toLowerCase();
-      const filteredData = data.filter(row =>
-        Object.values(row).some(val => String(val).toLowerCase().includes(query))
-      );
-      populateTable(filteredData);
-    }
+        function goToPage(page) {
+            currentPage = page;
+            renderTable();
+        }
 
-    function sortByName() {
-      const sortedData = [...data].sort((a, b) => a.name.localeCompare(b.name));
-      populateTable(sortedData);
-    }
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+            }
+        }
 
-    document.getElementById("prevMonth").addEventListener("click", () => changeMonth("prev"));
-    document.getElementById("nextMonth").addEventListener("click", () => changeMonth("next"));
-    document.getElementById("downloadExcel").addEventListener("click", downloadExcel);
-    document.getElementById("downloadPDF").addEventListener("click", downloadPDF);
-    document.getElementById("searchInput").addEventListener("input", searchTable);
-    document.getElementById("sortByName").addEventListener("click", sortByName);
+        function nextPage() {
+            const totalPages = Math.ceil(filteredData.length / entriesPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTable();
+            }
+        }
 
-    // Populate table on load
-    filterByMonth();
-  </script>
+        function changeEntries() {
+            const entriesSelect = document.getElementById('entries');
+            entriesPerPage = parseInt(entriesSelect.value);
+            currentPage = 1;
+            renderTable();
+        }
+
+        function searchTable() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            filteredData = data.filter(row => {
+                return Object.values(row).some(value => value.toString().toLowerCase().includes(searchInput));
+            });
+            currentPage = 1;
+            renderTable();
+        }
+
+        function addEmployee() {
+            const packageId = document.getElementById('packageId').value;
+            const jobCode = document.getElementById('jobCode').value;
+            const nationality = document.getElementById('nationality').value;
+            const jobName = document.getElementById('jobName').value;
+            const required = document.getElementById('required').value;
+            const manhourRate = document.getElementById('manhourRate').value;
+            const entryDate = document.getElementById('entryDate').value;
+
+            const newEmployee = {
+                packageId,
+                jobCode,
+                nationality,
+                jobName,
+                required: parseInt(required),
+                manhourRate: parseFloat(manhourRate),
+                entryDate
+            };
+
+            data.push(newEmployee);
+            filteredData = data;
+            renderTable();
+        }
+
+        function exportToExcel() {
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(filteredData, { header: ["packageId", "jobCode", "nationality", "jobName", "required", "manhourRate", "entryDate"] });
+
+            // Set header styles
+            const headerStyle = {
+                fill: {
+                    fgColor: { rgb: "00FF00" }
+                },
+                font: {
+                    bold: true
+                }
+            };
+
+            const range = XLSX.utils.decode_range(ws['!ref']);
+            for (let C = range.s.c; C <= range.e.c; ++C) {
+                const address = XLSX.utils.encode_col(C) + "1";
+                if (!ws[address]) continue;
+                ws[address].s = headerStyle;
+            }
+
+            // Set page size to A3
+            ws['!pageSetup'] = { paperSize: 8 };
+
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            XLSX.writeFile(wb, 'table_data.xlsx');
+        }
+
+        async function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('landscape', 'mm', 'a3');
+            doc.autoTable({ html: '#dataTable' });
+            doc.save('table_data.pdf');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTable();
+        });
+    </script>
 </body>
 </html>

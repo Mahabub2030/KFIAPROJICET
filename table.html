@@ -1,0 +1,454 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table Example</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  </head>
+       <header class="relative h-24 sm:h-28 md:h-32 lg:h-36 w-full overflow-hidden">
+    <!-- Background Image -->
+    <img src="image.png" alt="DACO Header" class="absolute inset-0 w-full h-full object-cover opacity-90" />
+
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+
+    <!-- Header Content -->
+    <div class="relative z-10 flex items-center justify-between h-full px-4 sm:px-8 text-white">
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+        <img src="./img/logo.jpg" alt="DACO Logo" class="h-10 sm:h-12" />
+        <div class="text-xs sm:text-sm leading-tight">
+          <strong class="block text-lg sm:text-xl font-bold">Nabatat Co. Compnay</strong>
+          <span class="block text-[10px]">Dammam Airports Company</span>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div class="text-center flex-1">
+        <h1 class="text-md sm:text-lg md:text-xl font-semibold">Landeside Servicer – Information Web</h1>
+        <p class="text-xs sm:text-sm">Contractor Inputs – Nabatat</p>
+      </div>
+
+      <!-- Empty right section to balance layout -->
+      <div class="w-12 sm:w-16"></div>
+    </div>
+  </header>
+  <body class="bg-white text-gray-800">
+    <div class="container mx-auto p-4">
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center">
+          <label for="entries" class="mr-2">Show</label>
+          <select
+            id="entries"
+            class="border border-gray-300 rounded p-1"
+            onchange="changeEntries()"
+          >
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          <span class="ml-2">entries</span>
+        </div>
+        <div class="flex items-center">
+          <button class="text-gray-600 mr-4" onclick="exportToExcel()">
+            <i class="fas fa-file-excel"></i> Excel
+          </button>
+          <button class="text-gray-600 mr-4" onclick="exportToPDF()">
+            <i class="fas fa-file-pdf"></i> PDF
+          </button>
+          <div class="relative">
+            <input
+              type="text"
+              id="searchInput"
+              class="border border-gray-300 rounded p-1"
+              placeholder="Search"
+              onkeyup="searchTable()"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="overflow-x-auto w-full grid-cols-12">
+        <table
+          id="dataTable"
+          class="w-full bg-white border border-gray-300"
+        >
+          <thead>
+            <tr
+              class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal"
+            >
+              <th class="py-3 px-6 text-left">
+                Sap Id <i class="fas fa-sort"></i>
+              </th>
+              <th class="py-3 px-6 text-left">
+                Iqama Number /Id <i class="fas fa-sort"></i>
+              </th>
+              <th class="py-3 px-6 text-left">
+                Name <i class="fas fa-sort"></i>
+              </th>
+              <th class="py-3 px-6 text-left">
+                Qulification <i class="fas fa-sort"></i>
+              </th>
+              <th class="py-3 px-6 text-left">
+                Job Title <i class="fas fa-sort"></i>
+              </th>
+              <th class="py-3 px-6 text-left">
+               Groupe <i class="fas fa-sort"></i>
+              </th>
+              <th class="py-3 px-6 text-left">
+                Joing_Date <i class="fas fa-sort"></i>
+              </th>
+              <th class="py-3 px-6 text-left">
+                Statuse <i class="fas fa-sort"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="tableBody" class="text-gray-600 text-sm font-light">
+            <!-- Table rows will be dynamically generated -->
+          </tbody>
+        </table>
+      </div>
+      <div class="flex justify-between items-center mt-4">
+        <div id="entriesInfo" class="text-gray-600 text-sm">
+          Showing 1 to 10 of 85 entries
+        </div>
+        <div class="flex items-center">
+          <button
+            class="border border-gray-300 rounded p-1 mx-1"
+            onclick="prevPage()"
+          >
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div id="pagination" class="flex items-center">
+            <!-- Pagination buttons will be dynamically generated -->
+          </div>
+          <button
+            class="border border-gray-300 rounded p-1 mx-1"
+            onclick="nextPage()"
+          >
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const data = [
+        {
+          SapId: "409472",
+          IqamaNumber_Id: "1111825723",
+          Name: "Engr.Abdul Hakim Alammar Al-Kalde",
+          Qulification:"Bachelor's degree in Construction Management and Civil Engineering /Technology ",
+          JobTitle: "Project Manager",
+          Groupe: 'Managmnet',
+          Joing_Date: '01-Sep-2023',
+          Statuse: "Acive",
+        },
+         {
+    "SapId": "401798",
+    "IqamaNumber_Id": "2254394725",
+    "Name": "Engr.Shoeib Abou Zeid Mahmoud Awad",
+    "JobTitle": "Operation Manager",
+    "Qulification": "Bachelor's degree in agricultural engineering",
+    "Groupe": 'Managmnet',
+    "Joing_Date": "01-Jan-21",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "405721",
+    "IqamaNumber_Id": "2420562395",
+    "Name": "Engr.Ashraf Ahmed Abdulhadi",
+    "JobTitle": "Project Coordinator",
+    "Qulification": "Bachelor's degree in agricultural engineering",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "400100",
+    "IqamaNumber_Id": "2360318402",
+    "Name": "ABDULLAH TAHA ABDULLAH ELSAYED",
+    "JobTitle": "Accountant",
+    "Qulification": "Bachelor's degree in Commerce",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "401749",
+    "IqamaNumber_Id": "2489688859",
+    "Name": "Engr.Alex Garcia Garcia",
+    "JobTitle": "Electrical Engineer",
+    "Qulification": "Bachelor of Science Electrical Engineering",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "401750",
+    "IqamaNumber_Id": "2483842916",
+    "Name": "Engr.Afrazier Nassal",
+    "JobTitle": "Civil Engineer",
+    "Qulification": "Bachelor of Science Civil Engineering",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "403698",
+    "IqamaNumber_Id": "1087109466",
+    "Name": "Ahmed Al-Dossary",
+    "JobTitle": "Project Administrator",
+    "Qulification": "High school",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "403691",
+    "IqamaNumber_Id": "1063800229",
+    "Name": "Eman Habib Mohammad Al-Nasir",
+    "JobTitle": "HR Admin",
+    "Qulification": "Diploma in Human Resources Management",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "403692",
+    "IqamaNumber_Id": "1008147140",
+    "Name": "Zahara",
+    "JobTitle": "Supervisor",
+    "Qulification": "Higher Diploma in Business Administration/Investment",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "408880",
+    "IqamaNumber_Id": "1004086458",
+    "Name": "Khalid AlKhaldi",
+    "JobTitle": "Mandup",
+    "Qulification": "High school",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "408174",
+    "IqamaNumber_Id": "1103136923",
+    "Name": "Ali AlMahasnah",
+    "JobTitle": "Service Chief (FENCE, ROADS & DRAINS)",
+    "Qulification": "Water science and engineering",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "414041",
+    "IqamaNumber_Id": "2554504510",
+    "Name": "ABDALLA SAMIR AHMED SAYED",
+    "JobTitle": "Accounting",
+    "Qulification": "Bachelor's degree in Commerce",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "407344",
+    "IqamaNumber_Id": "1079836175",
+    "Name": "Hassan Ahmed AlZahrani",
+    "JobTitle": "Purchasing Manager",
+    "Qulification": "High school",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "412089",
+    "IqamaNumber_Id": "1012990964",
+    "Name": "Alharby Neezar Abdulrahim",
+    "JobTitle": "Attendant,call",
+    "Qulification": "High school",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "405385",
+    "IqamaNumber_Id": "1010625711",
+    "Name": "Moneer Abdulhadi M Al Nasser",
+    "JobTitle": "Supervisor",
+    "Qulification": "Diploma/safety course engineering",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "401734",
+    "IqamaNumber_Id": "1003490479",
+    "Name": "SALMAN DAWOOD MUBARAK",
+    "JobTitle": "Buyer",
+    "Qulification": "Primary",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "405972",
+    "IqamaNumber_Id": "2503732816",
+    "Name": "Reda Abdelmaged Mohammad Ibrahim",
+    "JobTitle": "Service Chief (Landscaping & Irrigation)",
+    "Qulification": "Bachelor's degree in agricultural engineering",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  },
+  {
+    "SapId": "407557",
+    "IqamaNumber_Id": "2515496525",
+    "Name": "Mahabub Alam",
+    "JobTitle": "Data Proess_(IT)",
+    "Qulification": "Bachelor of Science  in  Computer Science  Engineering &Technology",
+    "Groupe": "Unknown",
+    "Joing_Date": "Unknown",
+    "Statuse": "Active"
+  }
+      
+       
+    
+       
+      
+        // Add more data as needed
+      ];
+
+      let currentPage = 1;
+      let entriesPerPage = 10;
+      let filteredData = data;
+
+      function renderTable() {
+        const tableBody = document.getElementById("tableBody");
+        tableBody.innerHTML = "";
+
+        const start = (currentPage - 1) * entriesPerPage;
+        const end = start + entriesPerPage;
+        const paginatedData = filteredData.slice(start, end);
+
+        paginatedData.forEach((row) => {
+          const tr = document.createElement("tr");
+          tr.classList.add("border-b", "border-gray-300", "hover:bg-gray-100");
+          tr.innerHTML = `
+                    <td class="py-3 px-6 text-left">${row.SapId}</td>
+                    <td class="py-3 px-6 text-left">${row.IqamaNumber_Id}</td>
+                    <td class="py-3 px-6 text-left">${row.Name}</td>
+                    <td class="py-3 px-6 text-left">${row.Qulification}</td>
+                    <td class="py-3 px-6 text-left">${row.JobTitle}</td>
+                    <td class="py-3 px-6 text-left">${row.Groupe}</td>
+                    <td class="py-3 px-6 text-left">${row.Joing_Date}</td>
+                    <td class="py-3 px-6 text-center bg-green-200  ">${row.Statuse}</td>
+                `;
+          tableBody.appendChild(tr);
+        });
+
+        renderPagination();
+        updateEntriesInfo();
+      }
+
+      function renderPagination() {
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = "";
+
+        const totalPages = Math.ceil(filteredData.length / entriesPerPage);
+
+        for (let i = 1; i <= totalPages; i++) {
+          const button = document.createElement("button");
+          button.classList.add(
+            "border",
+            "border-gray-300",
+            "rounded",
+            "p-1",
+            "mx-1"
+          );
+          button.textContent = i;
+          button.onclick = () => goToPage(i);
+          if (i === currentPage) {
+            button.classList.add("bg-gray-300");
+          }
+          pagination.appendChild(button);
+        }
+      }
+
+      function updateEntriesInfo() {
+        const entriesInfo = document.getElementById("entriesInfo");
+        const start = (currentPage - 1) * entriesPerPage + 1;
+        const end = Math.min(start + entriesPerPage - 1, filteredData.length);
+        entriesInfo.textContent = `Showing ${start} to ${end} of ${filteredData.length} entries`;
+      }
+
+      function goToPage(page) {
+        currentPage = page;
+        renderTable();
+      }
+
+      function prevPage() {
+        if (currentPage > 1) {
+          currentPage--;
+          renderTable();
+        }
+      }
+
+      function nextPage() {
+        const totalPages = Math.ceil(filteredData.length / entriesPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderTable();
+        }
+      }
+
+      function changeEntries() {
+        const entriesSelect = document.getElementById("entries");
+        entriesPerPage = parseInt(entriesSelect.value);
+        currentPage = 1;
+        renderTable();
+      }
+
+      function searchTable() {
+        const searchInput = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        filteredData = data.filter((row) => {
+          return Object.values(row).some((value) =>
+            value.toString().toLowerCase().includes(searchInput)
+          );
+        });
+        currentPage = 1;
+        renderTable();
+      }
+
+      function exportToExcel() {
+        var wb = XLSX.utils.table_to_book(
+          document.getElementById("dataTable"),
+          { sheet: "Sheet JS" }
+        );
+        XLSX.writeFile(wb, "table_data.xlsx");
+      }
+
+      async function exportToPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.autoTable({ html: "#dataTable" });
+        doc.save("table_data.pdf");
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        renderTable();
+      });
+    </script>
+  </body>
+</html>
