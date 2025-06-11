@@ -1,0 +1,472 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Dashboard
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+            font-family: 'Inter', sans-serif;
+        }
+  </style>
+ </head>
+ <body class="bg-gray-100 text-gray-900">
+  <div class="flex">
+   <!-- Sidebar -->
+   <div class="bg-gray-800 text-white w-64 min-h-screen p-4">
+    <div class="flex items-center justify-between mb-6">
+     <span class="text-xl font-bold">
+      Nabatat_CO_4012
+     </span>
+     <i class="fas fa-bars">
+     </i>
+    </div>
+    <nav>
+     <ul>
+      <li class="mb-4">
+       <a class="flex items-center text-yellow-400" href="#">
+        <i class="fas fa-tachometer-alt mr-2">
+        </i>
+        Dashboard
+        <i class="fas fa-chevron-down ml-auto">
+        </i>
+       </a>
+       <ul class="ml-6 mt-2">
+        <li class="mb-2">
+         <a class="text-yellow-400" href="#">
+          - Dashboard Light
+         </a>
+        </li>
+        <li class="mb-2">
+         <a class="text-gray-400" href="#">
+          - Dashboard Dark
+         </a>
+        </li>
+        <li class="mb-2">
+         <a class="text-gray-400" href="#">
+          - Dashboard 2
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li class="mb-4">
+       <a class="flex items-center text-gray-400" href="#">
+        <i class="fas fa-box mr-2">
+        </i>
+        Products
+       </a>
+      </li>
+      <li class="mb-4">
+       <a class="flex items-center text-gray-400" href="#">
+        <i class="fas fa-chart-line mr-2">
+        </i>
+        Sales
+       </a>
+      </li>
+      <li class="mb-4">
+       <a class="flex items-center text-gray-400" href="#">
+        <i class="fas fa-tasks mr-2">
+        </i>
+        Tasks
+       </a>
+      </li>
+      <li class="mb-4">
+       <a class="flex items-center text-gray-400" href="#">
+        <i class="fas fa-project-diagram mr-2">
+        </i>
+        Projects
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+   <!-- Main Content -->
+   <div class="flex-1 p-6">
+    <div class="flex justify-between items-center mb-6">
+     <div class="relative w-1/2">
+      <input class="w-full p-2 rounded-lg border border-gray-300" placeholder="Search here..." type="text"/>
+      <i class="fas fa-search absolute top-3 right-3 text-gray-400">
+      </i>
+     </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+     <div class="bg-purple-500 text-white p-4 rounded-lg">
+      <div class="flex justify-between items-center">
+       <div>
+        <h2 class="text-2xl font-bold">
+         290
+        </h2>
+        <p>
+        Total Emoplyee
+        </p>
+       </div>
+       <img alt="Revenue chart" class="w-12 h-12" src="./img/logo.jpg"/>
+      </div>
+     </div>
+     <div class="bg-yellow-500 text-white p-4 rounded-lg">
+      <div class="flex justify-between items-center">
+       <div>
+        <h2 class="text-2xl font-bold">
+         13
+        </h2>
+        <p>
+         Groupe
+        </p>
+       </div>
+       <i class="fas fa-plus-circle text-3xl">
+       </i>
+      </div>
+     </div>
+     <div class="bg-green-500 text-white p-4 rounded-lg">
+      <h2 class="text-xl font-bold mb-2">
+       Vacation Planing for 2025
+       <a href="./vacation.html">Vaction infromation</a>
+      </h2>
+      <p class="mb-4">
+        
+       It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout
+      </p>
+      <div class="flex items-center">
+       <img alt="Happy clients" class="w-12 h-12 rounded-full mr-2" src="https://placehold.co/50x50"/>
+       <span>
+        15k+ Happy Clients
+       </span>
+      </div>
+     </div>
+     <div class="bg-gray-800 text-white p-4 rounded-lg">
+      <div class="flex justify-between items-center">
+       <div>
+        <h2 class="text-2xl font-bold">
+         75%
+        </h2>
+        <p>
+         My Progress
+        </p>
+       </div>
+       <i class="fas fa-info-circle text-3xl">
+       </i>
+      </div>
+      <p class="mt-4">
+       Showcases a visual representation of the user's financial progress.
+      </p>
+      <button class="mt-4 bg-yellow-500 text-white py-2 px-4 rounded-lg">
+       More Details
+      </button>
+     </div>
+     <div class="bg-gray-800 text-white p-4 rounded-lg">
+      <div class="flex justify-between items-center">
+       <div>
+        <h2 class="text-2xl font-bold">
+         20
+        </h2>
+        <p>
+         Task not finishes
+        </p>
+       </div>
+       <p>
+        Complete Task
+       </p>
+      </div>
+     </div>
+     <div class="bg-gray-800 text-white p-4 rounded-lg">
+      <div class="flex justify-between items-center">
+       <div>
+        <h2 class="text-2xl font-bold">
+         $1200.00
+        </h2>
+        <p>
+         Total Deposits
+        </p>
+       </div>
+       <img alt="Deposits chart" class="w-12 h-12" src="https://placehold.co/50x50"/>
+      </div>
+     </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+     <div class="bg-gray-800 text-white p-4 rounded-lg">
+      <h2 class="text-xl font-bold mb-4">
+       Project Overview
+      </h2>
+      <img alt="Project overview chart" class="w-full" src="https://placehold.co/300x150"/>
+      <div class="flex justify-between items-center mt-4">
+       <div>
+        <p>
+         12,721
+        </p>
+        <p>
+         Number of projects
+        </p>
+       </div>
+       <div>
+        <p>
+         721
+        </p>
+        <p>
+         Number of clients
+        </p>
+       </div>
+       <div>
+        <p>
+         $2,650,254
+        </p>
+        <p>
+         Revenue
+        </p>
+       </div>
+       <div>
+        <p>
+         12,185hr
+        </p>
+        <p>
+         Working hours
+        </p>
+       </div>
+      </div>
+     </div>
+     <div class="bg-gray-800 text-white p-4 rounded-lg">
+      <h2 class="text-xl font-bold mb-4">
+       My To Do Items
+      </h2>
+      <ul>
+       <li class="flex justify-between items-center mb-2">
+        <span>
+         Iqama Expired Total 8 emplyees
+        </span>
+        <i class="fas fa-check-circle text-green-500">
+        </i>
+       </li>
+       <li class="flex justify-between items-center mb-2">
+        <span>
+         ALl udderprocess
+        </span>
+        <i class="fas fa-check-circle text-green-500">
+        </i>
+       </li>
+       <li class="flex justify-between items-center mb-2">
+        <span>
+         Complete the projects Monday
+        </span>
+        <i class="fas fa-check-circle text-green-500">
+        </i>
+       </li>
+       <li class="flex justify-between items-center mb-2">
+        <span>
+         Complete the projects Monday
+        </span>
+        <i class="fas fa-check-circle text-green-500">
+        </i>
+       </li>
+      </ul>
+     </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+     <div class="bg-gray-800 text-white p-4 rounded-lg">
+      <h2 class="text-xl font-bold mb-4">
+       Active Projects
+      </h2>
+      <table class="w-full">
+       <thead>
+        <tr>
+         <th class="text-left">
+          Project Name
+         </th>
+         <th class="text-left">
+          Project Lead
+         </th>
+         <th class="text-left">
+          Progress
+         </th>
+         <th class="text-left">
+          Status
+         </th>
+         <th class="text-left">
+          Due Date
+         </th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>
+          Bender project
+         </td>
+         <td>
+          Johnson
+         </td>
+         <td>
+          <div class="w-full bg-gray-600 rounded-full h-2.5">
+           <div class="bg-purple-500 h-2.5 rounded-full" style="width: 53%">
+           </div>
+          </div>
+         </td>
+         <td>
+          Inprogress
+         </td>
+         <td>
+          06 Jan 2024
+         </td>
+        </tr>
+        <tr>
+         <td>
+          Batman
+         </td>
+         <td>
+          William
+         </td>
+         <td>
+          <div class="w-full bg-gray-600 rounded-full h-2.5">
+           <div class="bg-red-500 h-2.5 rounded-full" style="width: 24%">
+           </div>
+          </div>
+         </td>
+         <td>
+          Pending
+         </td>
+         <td>
+          06 Jan 2024
+         </td>
+        </tr>
+        <tr>
+         <td>
+          Candy
+         </td>
+         <td>
+          Paul
+         </td>
+         <td>
+          <div class="w-full bg-gray-600 rounded-full h-2.5">
+           <div class="bg-green-500 h-2.5 rounded-full" style="width: 86%">
+           </div>
+          </div>
+         </td>
+         <td>
+          Completed
+         </td>
+         <td>
+          30 Jan 2024
+         </td>
+        </tr>
+        <tr>
+         <td>
+          Throwing
+         </td>
+         <td>
+          Ellisebeth
+         </td>
+         <td>
+          <div class="w-full bg-gray-600 rounded-full h-2.5">
+           <div class="bg-purple-500 h-2.5 rounded-full" style="width: 51%">
+           </div>
+          </div>
+         </td>
+         <td>
+          Inprogress
+         </td>
+         <td>
+          11 Jan 2024
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+     <div class="bg-gray-800 text-white p-4 rounded-lg">
+      <h2 class="text-xl font-bold mb-4">
+       Events
+      </h2>
+      <ul>
+       <li class="flex justify-between items-center mb-2">
+        <div>
+         <p>
+          20 Mon
+         </p>
+         <p>
+          Development planning
+         </p>
+         <p>
+          W3 Technologies
+         </p>
+        </div>
+        <p>
+         12.02 PM
+        </p>
+       </li>
+       <li class="flex justify-between items-center mb-2">
+        <div>
+         <p>
+          21 Mon
+         </p>
+         <p>
+          Development planning
+         </p>
+         <p>
+          W3 Technologies
+         </p>
+        </div>
+        <p>
+         12.02 PM
+        </p>
+       </li>
+       <li class="flex justify-between items-center mb-2">
+        <div>
+         <p>
+          24 Mon
+         </p>
+         <p>
+          Development planning
+         </p>
+         <p>
+          W3 Technologies
+         </p>
+        </div>
+        <p>
+         12.02 PM
+        </p>
+       </li>
+       <li class="flex justify-between items-center mb-2">
+        <div>
+         <p>
+          25 Mon
+         </p>
+         <p>
+          Development planning
+         </p>
+         <p>
+          W3 Technologies
+         </p>
+        </div>
+        <p>
+         12.02 PM
+        </p>
+       </li>
+      </ul>
+     </div>
+    </div>
+    <div class="bg-gray-800 text-white p-4 rounded-lg">
+     <h2 class="text-xl font-bold mb-4">
+      All Projects
+     </h2>
+     <div class="flex items-center">
+      <div class="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center text-2xl font-bold">
+       62
+      </div>
+      <div class="ml-4">
+       <p>
+        Complete
+       </p>
+       <p>
+        Pending
+       </p>
+       <p>
+        Not Start
+       </p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

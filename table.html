@@ -11,27 +11,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
   </head>
-       <header class="relative h-24 sm:h-28 md:h-32 lg:h-36 w-full overflow-hidden">
+  <header class="relative h-24 sm:h-28 md:h-32 lg:h-36 w-full overflow-hidden">
     <!-- Background Image -->
-    <img src="image.png" alt="DACO Header" class="absolute inset-0 w-full h-full object-cover opacity-90" />
+    <img
+      src="image.png"
+      alt="DACO Header"
+      class="absolute inset-0 w-full h-full object-cover opacity-90"
+    />
 
     <!-- Overlay -->
     <div class="absolute inset-0 bg-black bg-opacity-40"></div>
 
     <!-- Header Content -->
-    <div class="relative z-10 flex items-center justify-between h-full px-4 sm:px-8 text-white">
+    <div
+      class="relative z-10 flex items-center justify-between h-full px-4 sm:px-8 text-white"
+    >
       <!-- Logo -->
       <div class="flex items-center gap-2">
         <img src="./img/logo.jpg" alt="DACO Logo" class="h-10 sm:h-12" />
         <div class="text-xs sm:text-sm leading-tight">
-          <strong class="block text-lg sm:text-xl font-bold">Nabatat Co. Compnay</strong>
+          <strong class="block text-lg sm:text-xl font-bold"
+            >Nabatat Co. Compnay</strong
+          >
           <span class="block text-[10px]">Dammam Airports Company</span>
         </div>
       </div>
 
       <!-- Title -->
       <div class="text-center flex-1">
-        <h1 class="text-md sm:text-lg md:text-xl font-semibold">Landeside Servicer – Information Web</h1>
+        <h1 class="text-md sm:text-lg md:text-xl font-semibold">
+          Landeside Servicer – Information Web
+        </h1>
         <p class="text-xs sm:text-sm">Contractor Inputs – Nabatat</p>
       </div>
 
@@ -75,10 +85,7 @@
         </div>
       </div>
       <div class="overflow-x-auto w-full grid-cols-12">
-        <table
-          id="dataTable"
-          class="w-full bg-white border border-gray-300"
-        >
+        <table id="dataTable" class="w-full bg-white border border-gray-300">
           <thead>
             <tr
               class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal"
@@ -99,7 +106,7 @@
                 Job Title <i class="fas fa-sort"></i>
               </th>
               <th class="py-3 px-6 text-left">
-               Groupe <i class="fas fa-sort"></i>
+                Groupe <i class="fas fa-sort"></i>
               </th>
               <th class="py-3 px-6 text-left">
                 Joing_Date <i class="fas fa-sort"></i>
@@ -144,187 +151,185 @@
           SapId: "409472",
           IqamaNumber_Id: "1111825723",
           Name: "Engr.Abdul Hakim Alammar Al-Kalde",
-          Qulification:"Bachelor's degree in Construction Management and Civil Engineering /Technology ",
+          Qulification:
+            "Bachelor's degree in Construction Management and Civil Engineering /Technology ",
           JobTitle: "Project Manager",
-          Groupe: 'Managmnet',
-          Joing_Date: '01-Sep-2023',
+          Groupe: "Managmnet",
+          Joing_Date: "01-Sep-2023",
           Statuse: "Acive",
         },
-         {
-    "SapId": "401798",
-    "IqamaNumber_Id": "2254394725",
-    "Name": "Engr.Shoeib Abou Zeid Mahmoud Awad",
-    "JobTitle": "Operation Manager",
-    "Qulification": "Bachelor's degree in agricultural engineering",
-    "Groupe": 'Managmnet',
-    "Joing_Date": "01-Jan-21",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "405721",
-    "IqamaNumber_Id": "2420562395",
-    "Name": "Engr.Ashraf Ahmed Abdulhadi",
-    "JobTitle": "Project Coordinator",
-    "Qulification": "Bachelor's degree in agricultural engineering",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "400100",
-    "IqamaNumber_Id": "2360318402",
-    "Name": "ABDULLAH TAHA ABDULLAH ELSAYED",
-    "JobTitle": "Accountant",
-    "Qulification": "Bachelor's degree in Commerce",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "401749",
-    "IqamaNumber_Id": "2489688859",
-    "Name": "Engr.Alex Garcia Garcia",
-    "JobTitle": "Electrical Engineer",
-    "Qulification": "Bachelor of Science Electrical Engineering",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "401750",
-    "IqamaNumber_Id": "2483842916",
-    "Name": "Engr.Afrazier Nassal",
-    "JobTitle": "Civil Engineer",
-    "Qulification": "Bachelor of Science Civil Engineering",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "403698",
-    "IqamaNumber_Id": "1087109466",
-    "Name": "Ahmed Al-Dossary",
-    "JobTitle": "Project Administrator",
-    "Qulification": "High school",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "403691",
-    "IqamaNumber_Id": "1063800229",
-    "Name": "Eman Habib Mohammad Al-Nasir",
-    "JobTitle": "HR Admin",
-    "Qulification": "Diploma in Human Resources Management",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "403692",
-    "IqamaNumber_Id": "1008147140",
-    "Name": "Zahara",
-    "JobTitle": "Supervisor",
-    "Qulification": "Higher Diploma in Business Administration/Investment",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "408880",
-    "IqamaNumber_Id": "1004086458",
-    "Name": "Khalid AlKhaldi",
-    "JobTitle": "Mandup",
-    "Qulification": "High school",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "408174",
-    "IqamaNumber_Id": "1103136923",
-    "Name": "Ali AlMahasnah",
-    "JobTitle": "Service Chief (FENCE, ROADS & DRAINS)",
-    "Qulification": "Water science and engineering",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "414041",
-    "IqamaNumber_Id": "2554504510",
-    "Name": "ABDALLA SAMIR AHMED SAYED",
-    "JobTitle": "Accounting",
-    "Qulification": "Bachelor's degree in Commerce",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "407344",
-    "IqamaNumber_Id": "1079836175",
-    "Name": "Hassan Ahmed AlZahrani",
-    "JobTitle": "Purchasing Manager",
-    "Qulification": "High school",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "412089",
-    "IqamaNumber_Id": "1012990964",
-    "Name": "Alharby Neezar Abdulrahim",
-    "JobTitle": "Attendant,call",
-    "Qulification": "High school",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "405385",
-    "IqamaNumber_Id": "1010625711",
-    "Name": "Moneer Abdulhadi M Al Nasser",
-    "JobTitle": "Supervisor",
-    "Qulification": "Diploma/safety course engineering",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "401734",
-    "IqamaNumber_Id": "1003490479",
-    "Name": "SALMAN DAWOOD MUBARAK",
-    "JobTitle": "Buyer",
-    "Qulification": "Primary",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "405972",
-    "IqamaNumber_Id": "2503732816",
-    "Name": "Reda Abdelmaged Mohammad Ibrahim",
-    "JobTitle": "Service Chief (Landscaping & Irrigation)",
-    "Qulification": "Bachelor's degree in agricultural engineering",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  },
-  {
-    "SapId": "407557",
-    "IqamaNumber_Id": "2515496525",
-    "Name": "Mahabub Alam",
-    "JobTitle": "Data Proess_(IT)",
-    "Qulification": "Bachelor of Science  in  Computer Science  Engineering &Technology",
-    "Groupe": "Unknown",
-    "Joing_Date": "Unknown",
-    "Statuse": "Active"
-  }
-      
-       
-    
-       
-      
+        {
+          SapId: "401798",
+          IqamaNumber_Id: "2254394725",
+          Name: "Engr.Shoeib Abou Zeid Mahmoud Awad",
+          JobTitle: "Operation Manager",
+          Qulification: "Bachelor's degree in agricultural engineering",
+          Groupe: "Managmnet",
+          Joing_Date: "01-Jan-21",
+          Statuse: "Active",
+        },
+        {
+          SapId: "405721",
+          IqamaNumber_Id: "2420562395",
+          Name: "Engr.Ashraf Ahmed Abdulhadi",
+          JobTitle: "Project Coordinator",
+          Qulification: "Bachelor's degree in agricultural engineering",
+          Groupe: "Managmnet",
+          Joing_Date: "05-April-2025",
+          Statuse: "Active",
+        },
+        {
+          SapId: "400100",
+          IqamaNumber_Id: "2360318402",
+          Name: "ABDULLAH TAHA ABDULLAH ELSAYED",
+          JobTitle: "Accountant",
+          Qulification: "Bachelor's degree in Commerce",
+          Groupe: "Managmnet",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+        {
+          SapId: "401749",
+          IqamaNumber_Id: "2489688859",
+          Name: "Engr.Alex Garcia Garcia",
+          JobTitle: "Electrical Engineer",
+          Qulification: "Bachelor of Science Electrical Engineering",
+          Groupe: "Managmnet",
+          Joing_Date: "26-March-2025",
+          Statuse: "Active",
+        },
+        {
+          SapId: "401750",
+          IqamaNumber_Id: "2483842916",
+          Name: "Engr.Afrazier Nassal",
+          JobTitle: "Civil Engineer",
+          Qulification: "Bachelor of Science Civil Engineering",
+          Groupe: "Managmnet",
+          Joing_Date: "31-Aug-23",
+          Statuse: "Active",
+        },
+        {
+          SapId: "403698",
+          IqamaNumber_Id: "1087109466",
+          Name: "Ahmed Al-Dossary",
+          JobTitle: "Project Administrator",
+          Qulification: "High school",
+          Groupe: "Unknown",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+        {
+          SapId: "403691",
+          IqamaNumber_Id: "1063800229",
+          Name: "Eman Habib Mohammad Al-Nasir",
+          JobTitle: "HR Admin",
+          Qulification: "Diploma in Human Resources Management",
+          Groupe: "Unknown",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+        {
+          SapId: "403692",
+          IqamaNumber_Id: "1008147140",
+          Name: "Zahara",
+          JobTitle: "Supervisor",
+          Qulification: "Higher Diploma in Business Administration/Investment",
+          Groupe: "Unknown",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+        {
+          SapId: "408880",
+          IqamaNumber_Id: "1004086458",
+          Name: "Khalid AlKhaldi",
+          JobTitle: "Mandup",
+          Qulification: "High school",
+          Groupe: "Unknown",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+        {
+          SapId: "408174",
+          IqamaNumber_Id: "1103136923",
+          Name: "Ali AlMahasnah",
+          JobTitle: "Service Chief (FENCE, ROADS & DRAINS)",
+          Qulification: "Water science and engineering",
+          Groupe: "Unknown",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+        {
+          SapId: "414041",
+          IqamaNumber_Id: "2554504510",
+          Name: "ABDALLA SAMIR AHMED SAYED",
+          JobTitle: "Accounting",
+          Qulification: "Bachelor's degree in Commerce",
+          Groupe: "Unknown",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+        {
+          SapId: "407344",
+          IqamaNumber_Id: "1079836175",
+          Name: "Hassan Ahmed AlZahrani",
+          JobTitle: "Purchasing Manager",
+          Qulification: "High school",
+          Groupe: "Unknown",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+        {
+          SapId: "412089",
+          IqamaNumber_Id: "1012990964",
+          Name: "Alharby Neezar Abdulrahim",
+          JobTitle: "Attendant,call",
+          Qulification: "High school",
+          Groupe: "Unknown",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+        {
+          SapId: "405385",
+          IqamaNumber_Id: "1010625711",
+          Name: "Moneer Abdulhadi M Al Nasser",
+          JobTitle: "Supervisor",
+          Qulification: "Diploma/safety course engineering",
+          Groupe: "Unknown",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+        {
+          SapId: "401734",
+          IqamaNumber_Id: "1003490479",
+          Name: "SALMAN DAWOOD MUBARAK",
+          JobTitle: "Buyer",
+          Qulification: "Primary",
+          Groupe: "Unknown",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+        {
+          SapId: "405972",
+          IqamaNumber_Id: "2503732816",
+          Name: "Reda Abdelmaged Mohammad Ibrahim",
+          JobTitle: "Service Chief (Landscaping & Irrigation)",
+          Qulification: "Bachelor's degree in agricultural engineering",
+          Groupe: "Unknown",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+        {
+          SapId: "407557",
+          IqamaNumber_Id: "2515496525",
+          Name: "Mahabub Alam",
+          JobTitle: "Data Proess_(IT)",
+          Qulification:
+            "Bachelor of Science  in  Computer Science  Engineering &Technology",
+          Groupe: "Unknown",
+          Joing_Date: "Unknown",
+          Statuse: "Active",
+        },
+
         // Add more data as needed
       ];
 
